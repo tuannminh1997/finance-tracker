@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-9">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Ticker</th>
+        <th scope="col">Price</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tracked_coins.each do |coin| %>
+        <tr>
+          <th scope="row"><%= coin.ticker_symbol %></th>
+          <td><%= coin.last_price %></td>
+          <td>
+            <% if current_user.can_track_coin?(coin.ticker_symbol) %>
+              <%= link_to 'Add to portfolio', user_coins_path(user: current_user, ticker_symbol: coin.ticker_symbol),
+                          class: "btn btn-success", method: :post %>
+            <% elsif current_user.id != @user.id %>
+              <span class="badge badge-secondary">
+                You are already tracking
+                <% unless current_user.under_coin_limit %>
+                  10 stocks
+                <% end %>
+                <% if current_user.coin_already_tracked?(coin.ticker_symbol) %>
+                  this coin
+                <% end %>
+              </span>
+            <% end %>
+            <% if current_user.id == @user.id %>
+              <%= link_to 'Remove', user_coin_path(coin), method: :delete,
+                          data: { confirm: 'Are you sure ?' },
+                          class: 'btn btn-warning btn-sm' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

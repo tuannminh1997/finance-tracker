@@ -1,0 +1,2 @@
+module UserCoinsHelper
+end

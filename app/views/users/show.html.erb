@@ -1,0 +1,27 @@
+<h2>User Details</h2>
+
+<div class="card card-header result-block">
+  <table class="table table-striped table-hover">
+    <tbody>
+    <tr>
+      <td><strong>Name: </strong><%= @user.full_name %></td>
+      <td><strong>Email: </strong><%= @user.email %></td>
+      <td>
+        <% if current_user.not_friends_with?(@user.id) %>
+          <%= link_to 'Follow Friend', friendships_path(friend: @user), class: "btn btn-success btn-sm", method: :post %>
+        <% else %>
+          <span class="badge-secondary badge">
+            You are friends
+          </span>
+        <% end %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<% if @tracked_coins.empty? %>
+  <p class="lead">This user is not tracking any coins</p>
+<% else %>
+  <%= render "coins/list" %>
+<% end %>

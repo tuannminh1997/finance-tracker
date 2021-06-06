@@ -1,0 +1,22 @@
+<h1>My Portfolio</h1>
+
+<div class="search-area">
+  <h3>Search Stocks</h3>
+  <%= form_with url: search_stock_path, method: :get, local: false do |f| %>
+    <div class="form-group row">
+      <div class="col-sm-9 no-right-padding">
+        <%= f.text_field :coin, placeholder: "Stock ticker symbol", autofocus: true, class: "form-control form-control-lg" %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.button fa_icon("search 2x"), class: "btn btn-success"%>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div id="results">
+
+</div>
+<% unless @tracked_coins.empty? %>
+  <%= render "coins/list" %>
+<% end %>
+
